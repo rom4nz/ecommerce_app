@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/controllers/auth_service.dart';
 import 'package:ecommerce_app/firebase_options.dart';
 import 'package:ecommerce_app/views/home.dart';
+import 'package:ecommerce_app/views/home_nav.dart';
 import 'package:ecommerce_app/views/login.dart';
 import 'package:ecommerce_app/views/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         "/": (context) => const CheckUser(),
-        "/home": (context) => const HomePage(),
+        "/home": (context) => const HomeNav(),
         "/login": (context) => const LoginPage(),
         "/signup": (context) => const SignupPage(),
       },
