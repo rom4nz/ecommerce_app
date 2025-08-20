@@ -50,4 +50,13 @@ class DbService {
         .orderBy("priority", descending: true)
         .snapshots();
   }
+
+  //PRODUCTS
+  //read products of specific category
+  Stream<QuerySnapshot> readProducts(String category) {
+    return FirebaseFirestore.instance
+        .collection("shop_products")
+        .where("category", isEqualTo: category.toLowerCase())
+        .snapshots();
+  }
 }
