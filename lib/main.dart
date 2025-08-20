@@ -54,6 +54,7 @@ class MyApp extends StatelessWidget {
           "/signup": (context) => const SignupPage(),
           "/update_profile": (context) => const UpdateProfile(),
           "/specific": (context) => const SpecificProducts(),
+          "/view_product": (context) => const ViewProduct(),
         },
       ),
     );
@@ -85,6 +86,3 @@ class _CheckUserState extends State<CheckUser> {
     return Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }
-
-
-//03:31:00

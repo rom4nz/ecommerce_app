@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/components/category.dart';
+import 'package:ecommerce_app/components/home_page_view_more.dart';
 import 'package:ecommerce_app/components/promo.dart';
 import 'package:flutter/material.dart';
 
@@ -23,31 +24,34 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           elevation: 0,
         ),
-        body: Column(
-          children: [
-            Promo(),
-            SizedBox(height: 16),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 2.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Categories",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Promo(),
+              SizedBox(height: 16),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 2.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Categories",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Category(),
-              ],
-            ),
-          ],
+                  Category(),
+                  HomePageViewMore(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
