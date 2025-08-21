@@ -1,7 +1,10 @@
 import 'package:ecommerce_app/components/discount.dart';
+import 'package:ecommerce_app/models/cart_model.dart';
 import 'package:ecommerce_app/models/products_model.dart';
+import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 String formatPrice(num price) {
   final formatter = NumberFormat('#,##0', 'en_US');
@@ -200,7 +203,14 @@ class _ViewProductState extends State<ViewProduct> {
               child: SizedBox(
                 height: 60,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<CartProvider>(context, listen: false).addToCart(
+                      CartModel(productId: arguments.id, quantity: 1),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Added to cart successfully!")),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,
                     foregroundColor: Colors.white,

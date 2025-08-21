@@ -1,6 +1,8 @@
 import 'package:ecommerce_app/controllers/auth_service.dart';
 import 'package:ecommerce_app/firebase_options.dart';
+import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:ecommerce_app/providers/user_provider.dart';
+import 'package:ecommerce_app/views/cart_page.dart';
 import 'package:ecommerce_app/views/home_nav.dart';
 import 'package:ecommerce_app/views/login.dart';
 import 'package:ecommerce_app/views/signup.dart';
@@ -25,7 +27,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => UserProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
@@ -55,6 +60,7 @@ class MyApp extends StatelessWidget {
           "/update_profile": (context) => const UpdateProfile(),
           "/specific": (context) => const SpecificProducts(),
           "/view_product": (context) => const ViewProduct(),
+          "/cart": (context) => const CartPage(),
         },
       ),
     );
