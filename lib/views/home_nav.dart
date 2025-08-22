@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/views/cart_page.dart';
 import 'package:ecommerce_app/views/home.dart';
 import 'package:ecommerce_app/views/profile.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class HomeNav extends StatefulWidget {
 class _HomeNavState extends State<HomeNav> {
   int selectedIndex = 0;
 
-  List pages = [HomePage(), Text("Orders"), Text("Cart"), ProfilePage()];
+  List pages = [HomePage(), Text("Orders"), CartPage(), ProfilePage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +25,10 @@ class _HomeNavState extends State<HomeNav> {
             selectedIndex = value;
           });
         },
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey.shade400,
+        backgroundColor: Colors.blue.shade50,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.blueAccent.shade400,
+        unselectedItemColor: Colors.grey.shade600,
         showSelectedLabels: true,
         showUnselectedLabels: true,
         items: <BottomNavigationBarItem>[
