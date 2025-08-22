@@ -212,7 +212,7 @@ class _ViewProductState extends State<ViewProduct> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).primaryColor,
+                    backgroundColor: Colors.blueAccent.shade400,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
@@ -243,7 +243,7 @@ class _ViewProductState extends State<ViewProduct> {
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    foregroundColor: Theme.of(context).primaryColor,
+                    foregroundColor: Colors.blueAccent.shade400,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(0),
@@ -251,7 +251,7 @@ class _ViewProductState extends State<ViewProduct> {
                       ),
                     ),
                     side: BorderSide(
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.blueAccent.shade400,
                       width: 1.2,
                     ),
                     elevation: 0,
@@ -259,10 +259,7 @@ class _ViewProductState extends State<ViewProduct> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.flash_on,
-                        color: Theme.of(context).primaryColor,
-                      ),
+                      Icon(Icons.flash_on, color: Colors.blueAccent.shade400),
                       SizedBox(width: 8),
                       Text(
                         "Buy Now",

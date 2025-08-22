@@ -115,7 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 style: TextStyle(fontSize: 14),
                               ),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context).primaryColor,
+                                backgroundColor: Colors.blueAccent.shade400,
                                 foregroundColor: Colors.white,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 16,
