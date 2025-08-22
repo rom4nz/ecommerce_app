@@ -25,8 +25,10 @@ class _HomeNavState extends State<HomeNav> {
             selectedIndex = value;
           });
         },
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey.shade400,
+        backgroundColor: Colors.blue.shade50,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.blueAccent.shade400,
+        unselectedItemColor: Colors.grey.shade600,
         showSelectedLabels: true,
         showUnselectedLabels: true,
         items: <BottomNavigationBarItem>[
