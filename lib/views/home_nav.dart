@@ -1,7 +1,10 @@
+import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:ecommerce_app/views/cart_page.dart';
 import 'package:ecommerce_app/views/home.dart';
+import 'package:ecommerce_app/views/orders_page.dart';
 import 'package:ecommerce_app/views/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeNav extends StatefulWidget {
   const HomeNav({super.key});
@@ -13,7 +16,7 @@ class HomeNav extends StatefulWidget {
 class _HomeNavState extends State<HomeNav> {
   int selectedIndex = 0;
 
-  List pages = [HomePage(), Text("Orders"), CartPage(), ProfilePage()];
+  List pages = [HomePage(), OrdersPage(), CartPage(), ProfilePage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +44,17 @@ class _HomeNavState extends State<HomeNav> {
             label: "Orders",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
+            icon: Consumer<CartProvider>(
+              builder: (context, value, child) {
+                if (value.carts.length > 0) {
+                  return Badge(
+                    label: Text(value.carts.length.toString()),
+                    child: Icon(Icons.shopping_cart_outlined),
+                  );
+                }
+                return Icon(Icons.shopping_cart_outlined);
+              },
+            ),
             label: "Cart",
           ),
           BottomNavigationBarItem(
