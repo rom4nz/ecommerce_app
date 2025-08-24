@@ -98,4 +98,15 @@ class CartProvider extends ChangeNotifier {
     await DbService().decreaseCount(productId: productId);
     notifyListeners();
   }
+
+  void cancelProvider() {
+    _cartSubscription?.cancel();
+    _productSubscription?.cancel();
+  }
+
+  @override
+  void dispose() {
+    cancelProvider();
+    super.dispose();
+  }
 }

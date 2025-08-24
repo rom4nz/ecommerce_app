@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/controllers/auth_service.dart';
+import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:ecommerce_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -162,6 +163,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: Text("Logout"),
                       leading: Icon(Icons.logout_outlined),
                       onTap: () async {
+                        Provider.of<UserProvider>(
+                          context,
+                          listen: false,
+                        ).cancelProvider();
+                        Provider.of<CartProvider>(
+                          context,
+                          listen: false,
+                        ).cancelProvider();
                         await AuthService().logout();
                         Navigator.pushNamedAndRemoveUntil(
                           context,
