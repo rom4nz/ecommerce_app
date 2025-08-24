@@ -145,15 +145,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   children: [
                     ListTile(
-                      title: Text("Orders"),
+                      title: Text("My Orders"),
                       leading: Icon(Icons.local_shipping_outlined),
-                      onTap: () async {},
+                      onTap: () {
+                        Navigator.pushNamed(context, "/orders");
+                      },
                     ),
                     Divider(thickness: 1, endIndent: 10, indent: 10),
                     ListTile(
                       title: Text("Help & Support"),
                       leading: Icon(Icons.support_agent),
-                      onTap: () async {},
+                      onTap: () {},
                     ),
                     Divider(thickness: 1, endIndent: 10, indent: 10),
                     ListTile(

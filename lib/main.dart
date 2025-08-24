@@ -6,6 +6,7 @@ import 'package:ecommerce_app/views/cart_page.dart';
 import 'package:ecommerce_app/views/checkout_page.dart';
 import 'package:ecommerce_app/views/home_nav.dart';
 import 'package:ecommerce_app/views/login.dart';
+import 'package:ecommerce_app/views/orders_page.dart';
 import 'package:ecommerce_app/views/signup.dart';
 import 'package:ecommerce_app/views/specific_products.dart';
 import 'package:ecommerce_app/views/update_profile.dart';
@@ -59,6 +60,8 @@ class MyApp extends StatelessWidget {
           "/view_product": (context) => const ViewProduct(),
           "/cart": (context) => const CartPage(),
           "/checkout": (context) => const CheckoutPage(),
+          "/orders": (context) => const OrdersPage(),
+          "/view_order": (context) => const ViewOrder(),
         },
       ),
     );

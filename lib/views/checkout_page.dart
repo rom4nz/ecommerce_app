@@ -1,7 +1,9 @@
 import 'package:ecommerce_app/contants/payment.dart';
+import 'package:ecommerce_app/controllers/db_service.dart';
 import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:ecommerce_app/providers/user_provider.dart';
 import 'package:ecommerce_app/views/view_product.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
@@ -163,6 +165,47 @@ class _CheckoutPageState extends State<CheckoutPage> {
             );
             try {
               await Stripe.instance.presentPaymentSheet();
+
+              final cart = Provider.of<CartProvider>(context, listen: false);
+              User? currentUser = FirebaseAuth.instance.currentUser;
+              List products = [];
+
+              for (int i = 0; i < cart.products.length; i++) {
+                products.add({
+                  "id": cart.products[i].id,
+                  "name": cart.products[i].name,
+                  "image": cart.products[i].image,
+                  "quantity": cart.carts[i].quantity,
+                  "single_price": cart.products[i].new_price,
+                  "total_price":
+                      cart.products[i].new_price * cart.carts[i].quantity,
+                });
+              }
+
+              Map<String, dynamic> orderData = {
+                "user_id": currentUser!.uid,
+                "name": user.name,
+                "email": user.email,
+                "phone": user.phone,
+                "address": user.address,
+                "total": cart.totalCost,
+                "products": products,
+                "status": "PAID",
+                "created_at": DateTime.now().millisecondsSinceEpoch,
+              };
+
+              await DbService().createOrder(data: orderData);
+
+              for (int i = 0; i < cart.products.length; i++) {
+                DbService().reduceQuantity(
+                  productId: cart.products[i].id,
+                  quantity: cart.carts[i].quantity,
+                );
+              }
+              await DbService().emptyCart();
+
+              Navigator.pop(context);
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
@@ -196,5 +239,3 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 }
-
-//04:26:20
