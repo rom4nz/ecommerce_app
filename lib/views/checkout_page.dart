@@ -1,7 +1,11 @@
+import 'package:ecommerce_app/contants/payment.dart';
+import 'package:ecommerce_app/controllers/db_service.dart';
 import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:ecommerce_app/providers/user_provider.dart';
 import 'package:ecommerce_app/views/view_product.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -12,6 +16,38 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  Future<void> initPaymentSheet(int cost) async {
+    try {
+      final user = Provider.of<UserProvider>(context, listen: false);
+      final data = await createPaymentIntent(
+        name: user.name,
+        address: user.address,
+        amount: (cost * 100).toString(),
+      );
+
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          customFlow: false,
+          merchantDisplayName: 'Flutter Stripe Store Demo',
+          paymentIntentClientSecret: data['client_secret'],
+          customerEphemeralKeySecret: data['ephemeralKey'],
+          customerId: data['id'],
+          applePay: const PaymentSheetApplePay(merchantCountryCode: 'LK'),
+          googlePay: const PaymentSheetGooglePay(
+            merchantCountryCode: 'LK',
+            testEnv: true,
+          ),
+          style: ThemeMode.dark,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      rethrow;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,8 +139,97 @@ class _CheckoutPageState extends State<CheckoutPage> {
           ),
         ),
       ),
+      bottomNavigationBar: Container(
+        height: 60,
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          onPressed: () async {
+            final user = Provider.of<UserProvider>(context, listen: false);
+            if (user.address == "" ||
+                user.phone == "" ||
+                user.name == "" ||
+                user.email == "") {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Please fill all the details")),
+              );
+              return;
+            }
+            await initPaymentSheet(
+              Provider.of<CartProvider>(context, listen: false).totalCost,
+            );
+            try {
+              await Stripe.instance.presentPaymentSheet();
+
+              final cart = Provider.of<CartProvider>(context, listen: false);
+              User? currentUser = FirebaseAuth.instance.currentUser;
+              List products = [];
+
+              for (int i = 0; i < cart.products.length; i++) {
+                products.add({
+                  "id": cart.products[i].id,
+                  "name": cart.products[i].name,
+                  "image": cart.products[i].image,
+                  "quantity": cart.carts[i].quantity,
+                  "single_price": cart.products[i].new_price,
+                  "total_price":
+                      cart.products[i].new_price * cart.carts[i].quantity,
+                });
+              }
+
+              Map<String, dynamic> orderData = {
+                "user_id": currentUser!.uid,
+                "name": user.name,
+                "email": user.email,
+                "phone": user.phone,
+                "address": user.address,
+                "total": cart.totalCost,
+                "products": products,
+                "status": "PAID",
+                "created_at": DateTime.now().millisecondsSinceEpoch,
+              };
+
+              await DbService().createOrder(data: orderData);
+
+              for (int i = 0; i < cart.products.length; i++) {
+                DbService().reduceQuantity(
+                  productId: cart.products[i].id,
+                  quantity: cart.carts[i].quantity,
+                );
+              }
+              await DbService().emptyCart();
+
+              Navigator.pop(context);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    "Payment successful!",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            } catch (e) {
+              print("Error presenting payment sheet: $e");
+              print("Payment cancelled or failed");
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    "Payment failed",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  backgroundColor: Colors.redAccent,
+                ),
+              );
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blueAccent.shade400,
+            foregroundColor: Colors.white,
+          ),
+          child: Text("Proceed to Payment"),
+        ),
+      ),
     );
   }
 }
-
-//04:26:20

@@ -17,7 +17,6 @@ class UserProvider extends ChangeNotifier {
     loadUserData();
   }
 
-  //load user data from Firestore
   void loadUserData() {
     _userSubscription?.cancel();
     _userSubscription = DbService().readUserData().listen((snapshot) {
@@ -31,5 +30,15 @@ class UserProvider extends ChangeNotifier {
       address = data.address;
       notifyListeners();
     });
+  }
+
+  void cancelProvider() {
+    _userSubscription?.cancel();
+  }
+
+  @override
+  void dispose() {
+    cancelProvider();
+    super.dispose();
   }
 }

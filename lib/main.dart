@@ -6,18 +6,28 @@ import 'package:ecommerce_app/views/cart_page.dart';
 import 'package:ecommerce_app/views/checkout_page.dart';
 import 'package:ecommerce_app/views/home_nav.dart';
 import 'package:ecommerce_app/views/login.dart';
+import 'package:ecommerce_app/views/orders_page.dart';
 import 'package:ecommerce_app/views/signup.dart';
 import 'package:ecommerce_app/views/specific_products.dart';
 import 'package:ecommerce_app/views/update_profile.dart';
 import 'package:ecommerce_app/views/view_product.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await dotenv.load(fileName: ".env");
+  Stripe.publishableKey = dotenv.env['STRIPE_PUBLISH_KEY']!;
+  Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
+  Stripe.urlScheme = 'flutterstripe';
+  await Stripe.instance.applySettings();
+
   runApp(const MyApp());
 }
 
@@ -36,7 +46,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.blueAccent.shade400,
+          ),
         ),
         routes: {
           "/": (context) => const CheckUser(),
@@ -48,6 +60,8 @@ class MyApp extends StatelessWidget {
           "/view_product": (context) => const ViewProduct(),
           "/cart": (context) => const CartPage(),
           "/checkout": (context) => const CheckoutPage(),
+          "/orders": (context) => const OrdersPage(),
+          "/view_order": (context) => const ViewOrder(),
         },
       ),
     );

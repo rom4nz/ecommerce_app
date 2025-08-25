@@ -1,4 +1,3 @@
-//function to calculate the discount of old and new price
 String discountPercent(int oldPrice, int currentPrice) {
   if (oldPrice == 0) {
     return "0";

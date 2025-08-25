@@ -75,7 +75,7 @@ class _CategoryButtonState extends State<CategoryButton> {
         height: 95,
         width: 95,
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
+          color: Colors.blue.shade50,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
