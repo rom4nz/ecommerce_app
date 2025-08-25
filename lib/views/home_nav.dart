@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/providers/cart_provider.dart';
+import 'package:ecommerce_app/providers/user_provider.dart';
 import 'package:ecommerce_app/views/cart_page.dart';
 import 'package:ecommerce_app/views/home.dart';
 import 'package:ecommerce_app/views/orders_page.dart';
@@ -14,6 +15,12 @@ class HomeNav extends StatefulWidget {
 }
 
 class _HomeNavState extends State<HomeNav> {
+  @override
+  void initState() {
+    Provider.of<UserProvider>(context, listen: false);
+    super.initState();
+  }
+
   int selectedIndex = 0;
 
   List pages = [HomePage(), OrdersPage(), CartPage(), ProfilePage()];
@@ -46,7 +53,7 @@ class _HomeNavState extends State<HomeNav> {
           BottomNavigationBarItem(
             icon: Consumer<CartProvider>(
               builder: (context, value, child) {
-                if (value.carts.length > 0) {
+                if (value.carts.isNotEmpty) {
                   return Badge(
                     label: Text(value.carts.length.toString()),
                     child: Icon(Icons.shopping_cart_outlined),

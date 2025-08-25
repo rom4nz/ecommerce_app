@@ -17,7 +17,6 @@ class UserProvider extends ChangeNotifier {
     loadUserData();
   }
 
-  //load user data from Firestore
   void loadUserData() {
     _userSubscription?.cancel();
     _userSubscription = DbService().readUserData().listen((snapshot) {

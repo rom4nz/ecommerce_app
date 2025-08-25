@@ -84,15 +84,13 @@ class _CartContainerState extends State<CartContainer> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        child: Text(
-                          widget.name,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      Text(
+                        widget.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       SizedBox(height: 6),
@@ -100,7 +98,7 @@ class _CartContainerState extends State<CartContainer> {
                         children: [
                           SizedBox(width: 2),
                           Text(
-                            "\Rs. ${formatPrice(widget.new_price)}",
+                            "Rs. ${formatPrice(widget.new_price)}",
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -112,7 +110,7 @@ class _CartContainerState extends State<CartContainer> {
                       Row(
                         children: [
                           Text(
-                            "\Rs. ${formatPrice(widget.old_price)}",
+                            "Rs. ${formatPrice(widget.old_price)}",
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,

@@ -21,7 +21,6 @@ class ProductsModel {
     required this.maxQuantity,
   });
 
-  // Convert JSON to object model
   factory ProductsModel.fromJson(Map<String, dynamic> json, String id) {
     return ProductsModel(
       id: id,
@@ -35,7 +34,6 @@ class ProductsModel {
     );
   }
 
-  // Convert List<QueryDocumentSnapshot> to List<ProductsModel>
   static List<ProductsModel> fromJsonList(List<QueryDocumentSnapshot> list) {
     return list
         .map(

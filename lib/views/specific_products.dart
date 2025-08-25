@@ -145,5 +145,3 @@ class _SpecificProductsState extends State<SpecificProducts> {
     );
   }
 }
-
-//03:23:12

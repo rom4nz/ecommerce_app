@@ -186,96 +186,111 @@ class _ViewProductState extends State<ViewProduct> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.08),
-              blurRadius: 8,
-              offset: Offset(0, -2),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: 60,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Provider.of<CartProvider>(context, listen: false).addToCart(
-                      CartModel(productId: arguments.id, quantity: 1),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Added to cart successfully!")),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent.shade400,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(0),
-                        bottomLeft: Radius.circular(0),
-                      ),
-                    ),
-                    elevation: 0,
+      bottomNavigationBar: arguments.maxQuantity != 0
+          ? Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.08),
+                    blurRadius: 8,
+                    offset: Offset(0, -2),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.shopping_cart),
-                      SizedBox(width: 8),
-                      Text(
-                        "Add to Cart",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
+                ],
               ),
-            ),
-            Expanded(
-              child: SizedBox(
-                height: 60,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.blueAccent.shade400,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(0),
-                        bottomRight: Radius.circular(0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 60,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Provider.of<CartProvider>(
+                            context,
+                            listen: false,
+                          ).addToCart(
+                            CartModel(productId: arguments.id, quantity: 1),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Added to cart successfully!"),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent.shade400,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(0),
+                              bottomLeft: Radius.circular(0),
+                            ),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.shopping_cart),
+                            SizedBox(width: 8),
+                            Text(
+                              "Add to Cart",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    side: BorderSide(
-                      color: Colors.blueAccent.shade400,
-                      width: 1.2,
-                    ),
-                    elevation: 0,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.flash_on, color: Colors.blueAccent.shade400),
-                      SizedBox(width: 8),
-                      Text(
-                        "Buy Now",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: SizedBox(
+                      height: 60,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Provider.of<CartProvider>(
+                            context,
+                            listen: false,
+                          ).addToCart(
+                            CartModel(productId: arguments.id, quantity: 1),
+                          );
+                          Navigator.pushNamed(context, "/checkout");
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.blueAccent.shade400,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(0),
+                              bottomRight: Radius.circular(0),
+                            ),
+                          ),
+                          side: BorderSide(
+                            color: Colors.blueAccent.shade400,
+                            width: 1.2,
+                          ),
+                          elevation: 0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.flash_on,
+                              color: Colors.blueAccent.shade400,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              "Buy Now",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ),
-          ],
-        ),
-      ),
+            )
+          : SizedBox(),
     );
   }
 }
-
-
-//01:33:57

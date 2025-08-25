@@ -50,7 +50,7 @@ class _OfferZoneState extends State<OfferZone> {
                 SizedBox(height: 25),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10),
-                  color: Colors.green.shade50,
+                  color: Colors.blue.shade50,
                   child: Column(
                     children: [
                       Row(

@@ -19,25 +19,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Future<void> initPaymentSheet(int cost) async {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
-      // 1. create payment intent on the server
       final data = await createPaymentIntent(
         name: user.name,
         address: user.address,
         amount: (cost * 100).toString(),
       );
 
-      // 2. initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
-          // Set to true for custom flow
           customFlow: false,
-          // Main params
           merchantDisplayName: 'Flutter Stripe Store Demo',
           paymentIntentClientSecret: data['client_secret'],
-          // Customer keys
           customerEphemeralKeySecret: data['ephemeralKey'],
           customerId: data['id'],
-          // Extra options
           applePay: const PaymentSheetApplePay(merchantCountryCode: 'LK'),
           googlePay: const PaymentSheetGooglePay(
             merchantCountryCode: 'LK',
@@ -229,11 +223,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
               );
             }
           },
-          child: Text("Proceed to Payment"),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blueAccent.shade400,
             foregroundColor: Colors.white,
           ),
+          child: Text("Proceed to Payment"),
         ),
       ),
     );

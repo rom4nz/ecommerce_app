@@ -53,9 +53,9 @@ class _OrdersPageState extends State<OrdersPage> {
     required Color textColor,
   }) {
     return Container(
-      child: Text(text, style: TextStyle(color: textColor)),
       color: bgColor,
       padding: EdgeInsets.all(8),
+      child: Text(text, style: TextStyle(color: textColor)),
     );
   }
 
@@ -171,7 +171,7 @@ class _ViewOrderState extends State<ViewOrder> {
                           children: [
                             Row(
                               children: [
-                                Container(
+                                SizedBox(
                                   height: 50,
                                   width: 50,
                                   child: Image.network(e.image),

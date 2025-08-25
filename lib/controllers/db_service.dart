@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 class DbService {
   User? user = FirebaseAuth.instance.currentUser;
 
-  //USER DATA
-  //add user data to the firestore
   Future saveUserData({required String name, required String email}) async {
     try {
       Map<String, dynamic> data = {"name": name, "email": email};
@@ -19,7 +17,6 @@ class DbService {
     }
   }
 
-  //update the data of the user in firestore
   Future updateUserData({required Map<String, dynamic> extraData}) async {
     await FirebaseFirestore.instance
         .collection("shop_users")
@@ -27,7 +24,6 @@ class DbService {
         .update(extraData);
   }
 
-  //read user data from firestore
   Stream<DocumentSnapshot> readUserData() {
     return FirebaseFirestore.instance
         .collection("shop_users")
@@ -35,7 +31,6 @@ class DbService {
         .snapshots();
   }
 
-  //READ PROMOS AND BANNERS
   Stream<QuerySnapshot> readPromos() {
     return FirebaseFirestore.instance.collection("shop_promos").snapshots();
   }
@@ -44,7 +39,6 @@ class DbService {
     return FirebaseFirestore.instance.collection("shop_banners").snapshots();
   }
 
-  //READ CATEGORIES
   Stream<QuerySnapshot> readCategories() {
     return FirebaseFirestore.instance
         .collection("shop_categories")
@@ -52,8 +46,6 @@ class DbService {
         .snapshots();
   }
 
-  //PRODUCTS
-  //read products of specific category
   Stream<QuerySnapshot> readProducts(String category) {
     return FirebaseFirestore.instance
         .collection("shop_products")
@@ -61,7 +53,6 @@ class DbService {
         .snapshots();
   }
 
-  // search products by doc ids
   Stream<QuerySnapshot> searchProducts(List<String> docIds) {
     return FirebaseFirestore.instance
         .collection("shop_products")
@@ -69,7 +60,6 @@ class DbService {
         .snapshots();
   }
 
-  //reduce the count of product after order is placed
   Future reduceQuantity({
     required String productId,
     required int quantity,
@@ -80,8 +70,6 @@ class DbService {
         .update({"quantity": FieldValue.increment(-quantity)});
   }
 
-  //CART
-  //display the user cart
   Stream<QuerySnapshot> readUserCart() {
     return FirebaseFirestore.instance
         .collection("shop_users")
@@ -90,10 +78,8 @@ class DbService {
         .snapshots();
   }
 
-  //add product to the cart
   Future addToCart({required CartModel cartData}) async {
     try {
-      // update
       await FirebaseFirestore.instance
           .collection("shop_users")
           .doc(user!.uid)
@@ -106,7 +92,6 @@ class DbService {
     } on FirebaseException catch (e) {
       print("firebase exception : ${e.code}");
       if (e.code == "not-found") {
-        // insert
         await FirebaseFirestore.instance
             .collection("shop_users")
             .doc(user!.uid)
@@ -117,7 +102,6 @@ class DbService {
     }
   }
 
-  //remove product from the cart
   Future deleteItemFromCart({required String productId}) async {
     await FirebaseFirestore.instance
         .collection("shop_users")
@@ -127,7 +111,6 @@ class DbService {
         .delete();
   }
 
-  //empty using cart
   Future emptyCart() async {
     await FirebaseFirestore.instance
         .collection("shop_users")
@@ -141,7 +124,6 @@ class DbService {
         });
   }
 
-  //decrease count of item
   Future decreaseCount({required String productId}) async {
     await FirebaseFirestore.instance
         .collection("shop_users")
@@ -151,13 +133,10 @@ class DbService {
         .update({"quantity": FieldValue.increment(-1)});
   }
 
-  //ORDERS
-  //create a new order
   Future createOrder({required Map<String, dynamic> data}) async {
     await FirebaseFirestore.instance.collection("shop_orders").add(data);
   }
 
-  //update order status
   Future updateOrderStatus({
     required String docId,
     required Map<String, dynamic> data,
@@ -168,7 +147,6 @@ class DbService {
         .update(data);
   }
 
-  //read the order data of specific user
   Stream<QuerySnapshot> readOrders() {
     return FirebaseFirestore.instance
         .collection("shop_orders")
