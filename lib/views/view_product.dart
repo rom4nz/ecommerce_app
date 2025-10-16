@@ -294,3 +294,4 @@ class _ViewProductState extends State<ViewProduct> {
     );
   }
 }
+ 

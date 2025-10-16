@@ -6,3 +6,4 @@ String discountPercent(int oldPrice, int currentPrice) {
     return discount.toStringAsFixed(0);
   }
 }
+ 

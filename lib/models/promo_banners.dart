@@ -35,3 +35,4 @@ class PromoBannersModel {
         .toList();
   }
 }
+ 
